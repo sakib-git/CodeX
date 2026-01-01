@@ -17,13 +17,16 @@ const Register = () => {
   const handleRegister = (data) => {
     registerUser(data.email, data.password)
     .then(() => {
+       navigate('/')
     })
-    navigate('/')
+   
   };
   const handlegoogle = () => {
 GoogleLogin()
-.then()
-navigate('/')
+.then(() => {
+  navigate('/')
+})
+
   }
   return (
     <div className="mx-2 ">

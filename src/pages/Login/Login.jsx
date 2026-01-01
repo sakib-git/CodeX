@@ -17,13 +17,17 @@ const Login = () => {
 
   const handleLogin = (data) => {
 loginUser(data.email, data.password)
-.then()
-navigate('/')
+.then(() => {
+  navigate('/')
+})
+
   }
     const handlegoogle = () => {
 GoogleLogin()
-.then()
-navigate('/')
+.then(() => {
+  navigate('/')
+})
+
   }
   return (
     <div className="mx-2 ">
