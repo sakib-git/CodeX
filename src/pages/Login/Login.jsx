@@ -7,75 +7,59 @@ import useAuth from './../../Hooks/useAuth';
 import { toast } from 'kitzo';
 
 const Login = () => {
-  const {loginUser,GoogleLogin} = useAuth()
-  const [showPass, setShowPass] = useState(true)
-  const navigate = useNavigate()
-    const {
+  const { loginUser, GoogleLogin } = useAuth();
+  const [showPass, setShowPass] = useState(true);
+  const navigate = useNavigate();
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const handleLogin = (data) => {
-loginUser(data.email, data.password)
-.then(() => {
-  navigate('/')
-}).catch((err) => {
-      alert(err.message);
-      
+    loginUser(data.email, data.password)
+      .then(() => {
+        navigate('/');
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const handlegoogle = () => {
+    GoogleLogin().then(() => {
+      navigate('/');
     });
-  }
-
- 
-    const handlegoogle = () => {
-GoogleLogin()
-.then(() => {
-  navigate('/')
-})
-
-  }
+  };
   return (
     <div className="mx-2 ">
       <div className="flex justify-center items-center mt-50">
-        <form 
-        onSubmit={handleSubmit(handleLogin)}
-         className="max-w-[400px] w-full flex flex-col gap-3 ">
+        <form onSubmit={handleSubmit(handleLogin)} className="max-w-[400px] w-full flex flex-col gap-3 ">
           <h3 className="text-3xl font-bold mb-3 text-center">Welcome back!</h3>
           <div className="flex flex-col gap-1.5">
             <label className="text-gray-600 font-light" htmlFor="email">
               Email
             </label>
-            <input type="email" {...register('email', {required:true})} id="email" className="border border-[#c9c9c9] px-3 py-2 focus:outline-none focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] transition rounded-full " placeholder="Your Email" />
-            {
-              errors.email?.type === 'required' && (
-                <p className='text-sm text-red-500'>email is required</p>
-              )
-            }
+            <input type="email" {...register('email', { required: true })} id="email" className="border border-[#c9c9c9] px-3 py-2 focus:outline-none focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] transition rounded-full " placeholder="Your Email" />
+            {errors.email?.type === 'required' && <p className="text-sm text-red-500">email is required</p>}
           </div>
-      
 
           <div className="flex flex-col gap-1.5 relative">
-            <label  className="text-gray-600 font-light" htmlFor="password">Password</label>
-            <input type={showPass ? "password" : "text"} id="password" 
-            {...register('password', {required:true, minLength:6})}
-            className="border border-[#c9c9c9] px-3 py-2 focus:outline-none focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] transition rounded-full " placeholder="Your Password" />
-          {
-            errors.password?.type === 'required' && (
-              <p className='text-sm text-red-500'>Password is required</p>
-            )
-          }
-          {errors.password?.type === 'minLength' && <p className="text-sm text-red-600">password must be 6 characters or longer</p>}
-            <span className='absolute right-1 top-8.5 bg-[#e6e6e6] rounded-full p-[8px]'
-             onClick={() => setShowPass(!showPass)}>
-              {showPass ?  <RiEyeCloseLine size={18} /> : <AiOutlineEye size={18} /> }
+            <label className="text-gray-600 font-light" htmlFor="password">
+              Password
+            </label>
+            <input type={showPass ? 'password' : 'text'} id="password" {...register('password', { required: true, minLength: 6 })} className="border border-[#c9c9c9] px-3 py-2 focus:outline-none focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] transition rounded-full " placeholder="Your Password" />
+            {errors.password?.type === 'required' && <p className="text-sm text-red-500">Password is required</p>}
+            {errors.password?.type === 'minLength' && <p className="text-sm text-red-600">password must be 6 characters or longer</p>}
+            <span className="absolute right-1 top-8.5 bg-[#e6e6e6] rounded-full p-[8px]" onClick={() => setShowPass(!showPass)}>
+              {showPass ? <RiEyeCloseLine size={18} /> : <AiOutlineEye size={18} />}
             </span>
           </div>
 
-
-          <div className='flex flex-col gap-1'>
+          <div className="flex flex-col gap-1">
             <button className="bg-[#1a1a1a] px-2 py-2 rounded-full text-white font-semibold ">Login</button>
             <p className="text-center">or</p>
-            <button type="button" onClick={handlegoogle}  className="btn bg-[#1a1a1a] text-white font-semibold rounded-full  py-3 border-[#e5e5e5]">
+            <button type="button" onClick={handlegoogle} className="btn bg-[#1a1a1a] text-white font-semibold rounded-full  py-3 border-[#e5e5e5]">
               <svg className="bg-black" aria-label="Google logo" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <g>
                   <path d="m0 0H512V512H0" fill="#000"></path>
