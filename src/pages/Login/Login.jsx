@@ -4,6 +4,7 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import useAuth from './../../Hooks/useAuth';
+import { toast } from 'kitzo';
 
 const Login = () => {
   const {loginUser,GoogleLogin} = useAuth()
@@ -19,9 +20,13 @@ const Login = () => {
 loginUser(data.email, data.password)
 .then(() => {
   navigate('/')
-})
-
+}).catch((err) => {
+      alert(err.message);
+      
+    });
   }
+
+ 
     const handlegoogle = () => {
 GoogleLogin()
 .then(() => {
@@ -52,13 +57,14 @@ GoogleLogin()
           <div className="flex flex-col gap-1.5 relative">
             <label  className="text-gray-600 font-light" htmlFor="password">Password</label>
             <input type={showPass ? "password" : "text"} id="password" 
-            {...register('password', {required:true})}
+            {...register('password', {required:true, minLength:6})}
             className="border border-[#c9c9c9] px-3 py-2 focus:outline-none focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] transition rounded-full " placeholder="Your Password" />
           {
-            errors.pasword?.type === 'required' && (
+            errors.password?.type === 'required' && (
               <p className='text-sm text-red-500'>Password is required</p>
             )
           }
+          {errors.password?.type === 'minLength' && <p className="text-sm text-red-600">password must be 6 characters or longer</p>}
             <span className='absolute right-1 top-8.5 bg-[#e6e6e6] rounded-full p-[8px]'
              onClick={() => setShowPass(!showPass)}>
               {showPass ?  <RiEyeCloseLine size={18} /> : <AiOutlineEye size={18} /> }
